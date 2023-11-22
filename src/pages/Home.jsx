@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
-//Importing axios
+// Importing axios
 import axios from "axios";
 
 function Home() {
@@ -12,16 +12,17 @@ function Home() {
   const handleChange = (tags) => {
     setTags(tags);
   };
+
   const PostQuestions = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:6000/new-question", {
+      await axios.post("http://localhost:7000/new-question", {
         question: question,
         options: tags,
         correctOptionIndex: correctOption,
       });
     } catch (error) {
-      console.log(error);
+      console.error("Error posting question:", error);
     }
   };
 
