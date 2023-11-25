@@ -1,0 +1,19 @@
+.form-wrapper {
+  padding: 15px;
+  padding-left: 25px;
+  width: 35%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+input {
+  width: 80%;
+}
+/* styles.css */
+.tags-input-container {
+  width: 100%;
+  border: 1px solid #ffffff;
+  /* Add any other styles you want for the parent div */
+}
