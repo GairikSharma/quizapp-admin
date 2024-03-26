@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import LandinPage from "./pages/LandinPage";
-import Home from "./pages/home";
+import Home from "./pages/Home";
 import { useState } from "react";
 import GlobalContext from "./GlobalContext";
 
@@ -13,9 +13,10 @@ function App() {
       <GlobalContext.Provider value={{ admin, setAdmin }}>
         <BrowserRouter>
           <div className="App">
-            <Routes>
+            {/* <Routes>
               <Route path="/" element={admin ? <Home /> : <LandinPage />} />
-            </Routes>
+            </Routes> */}
+            <Home />
           </div>
         </BrowserRouter>
       </GlobalContext.Provider>

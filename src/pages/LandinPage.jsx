@@ -30,7 +30,7 @@ function LandinPage() {
   };
   return (
     <>
-      <div className="auth-container">
+      <div className="auth-container ">
         <div className="left">
           <button className="auth-button github">
             <FiGithub />

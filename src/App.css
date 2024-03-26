@@ -14,3 +14,15 @@ body {
   justify-content: center;
   align-items: flex-start;
 }
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: skyblue;
+  border-radius: 5px;
+}
