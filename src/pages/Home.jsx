@@ -11,8 +11,8 @@ function Home() {
   const { admin, setAdmin } = useContext(GlobalContext);
   const [category, setCategory] = useState("");
   const [question, setQuestion] = useState("");
-  const [correctOption, setCorrectOption] = useState(null);
-  const [point, setPoint] = useState(null);
+  const [correctOption, setCorrectOption] = useState("");
+  const [point, setPoint] = useState(0);
   const [tags, setTags] = useState([]);
 
   //States for the alert
@@ -22,7 +22,7 @@ function Home() {
 
   //States to check the input values
 
-  let url = `http://localhost:7000/new-question/${category}`;
+  let url = `https://quizapp-backend-95eh.onrender.com/new-question/${category}`;
 
   const showAlert = () => {
     setIsVisible(true);
@@ -44,19 +44,29 @@ function Home() {
 
   const PostQuestions = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post(url, {
-        question: question,
-        options: tags,
-        point: point,
-        correctOptionIndex: correctOption,
-      });
-      showAlert();
-    } catch (error) {
-      console.error("Error posting question:", error);
+    if (
+      question === "" ||
+      category === "" ||
+      correctOption === "" ||
+      point <= 0 ||
+      tags.length === 0
+    ) {
+      alert("Please fill all the fields");
+    } else {
+      try {
+        await axios.post(url, {
+          question: question,
+          options: tags,
+          correctOption: correctOption,
+          point: point,
+        });
+      } catch (error) {
+        console.error("Error posting question:", error);
+      } finally {
+        showAlert();
+      }
     }
   };
-
 
   const tagStyle = {
     backgroundColor: "lightblue",
@@ -81,6 +91,7 @@ function Home() {
               <Alert />
             </div>
           )}
+
           {/* {invalidIsVisible && (
             <div className="absolute top-1 right-0 w-[350px]">
               <InvalidAlert />
@@ -207,7 +218,7 @@ function Home() {
                 className="tags-input-container"
                 style={{
                   border: "2px solid gray",
-                  padding: "3px",
+                  padding: "7px",
                   borderRadius: "7px",
                   backgroundColor: "transparent",
                 }}
@@ -227,16 +238,27 @@ function Home() {
               >
                 Correct Option
               </label>
-              <input
-                type="number"
-                aria-describedby="helper-text-explanation"
-                className=" border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter Correct Option..."
-                required
+
+              <select
+                id="countries"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 onChange={(e) => {
                   setCorrectOption(e.target.value);
                 }}
-              ></input>
+              >
+                {correctOption === "" && <option>Select</option>}
+                {tags.map((i) => {
+                  return (
+                    <option
+                      onChange={(e) => {
+                        setCorrectOption(i);
+                      }}
+                    >
+                      {i}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
 
             <div className="question">
