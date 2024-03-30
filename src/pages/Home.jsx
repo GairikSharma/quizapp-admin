@@ -253,7 +253,7 @@ function Home() {
                   setCorrectOption(e.target.value);
                 }}
               >
-                {correctOption === "" && <option>Select</option>}
+                <option>Select</option>
                 {tags.map((i) => {
                   return (
                     <option
