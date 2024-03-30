@@ -7,10 +7,6 @@ import Alert from "../components/Alert";
 import InvalidAlert from "../components/InvalidAlert";
 import GlobalContext from "../GlobalContext";
 import Loader from "../components/Loader";
-//Importing dotenv
-import dotenv from 'dotenv';
-//Loading env vars
-dotenv.config();
 
 function Home() {
   const { admin, setAdmin } = useContext(GlobalContext);
@@ -28,7 +24,7 @@ function Home() {
 
   //States to check the input values
 
-  let url = `${process.env.API}/new-question/${category}`;
+  let url = `https://quizapp-backend-sfcz.vercel.app/new-question/${category}`;
 
   const showAlert = () => {
     setIsVisible(true);
