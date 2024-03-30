@@ -96,7 +96,7 @@ function Home() {
             </div>
           )}
           {
-            Isloading && <Loader />
+            Isloading && <div className="w-full h-screen bg-slate-200 flex justify-center items-center"><Loader /></div>
           }
 
           {/* {invalidIsVisible && (
