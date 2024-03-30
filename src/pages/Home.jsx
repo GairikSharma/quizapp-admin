@@ -6,6 +6,7 @@ import axios from "axios";
 import Alert from "../components/Alert";
 import InvalidAlert from "../components/InvalidAlert";
 import GlobalContext from "../GlobalContext";
+import Loader from "../components/Loader";
 
 function Home() {
   const { admin, setAdmin } = useContext(GlobalContext);
@@ -14,6 +15,7 @@ function Home() {
   const [correctOption, setCorrectOption] = useState("");
   const [point, setPoint] = useState(0);
   const [tags, setTags] = useState([]);
+  const [Isloading, setIsLoading] = useState(false)
 
   //States for the alert
   const [isVisible, setIsVisible] = useState(false);
@@ -53,6 +55,7 @@ function Home() {
     ) {
       alert("Please fill all the fields");
     } else {
+      setIsLoading(true)
       try {
         await axios.post(url, {
           question: question,
@@ -63,6 +66,7 @@ function Home() {
       } catch (error) {
         console.error("Error posting question:", error);
       } finally {
+        setIsLoading(false)
         showAlert();
       }
     }
@@ -91,6 +95,9 @@ function Home() {
               <Alert />
             </div>
           )}
+          {
+            Isloading && <Loader />
+          }
 
           {/* {invalidIsVisible && (
             <div className="absolute top-1 right-0 w-[350px]">
