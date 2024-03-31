@@ -7,15 +7,16 @@ import Alert from "../components/Alert";
 import InvalidAlert from "../components/InvalidAlert";
 import GlobalContext from "../GlobalContext";
 import Loader from "../components/Loader";
+import TagInput from "../components/TagInput";
+import Ti from "../components/TagInput";
 
 function Home() {
-  const { admin, setAdmin } = useContext(GlobalContext);
+  const { tags, setTags } = useContext(GlobalContext);
   const [category, setCategory] = useState("");
   const [question, setQuestion] = useState("");
   const [correctOption, setCorrectOption] = useState("");
   const [point, setPoint] = useState(0);
-  const [tags, setTags] = useState([]);
-  const [Isloading, setIsLoading] = useState(false)
+  const [Isloading, setIsLoading] = useState(false);
 
   //States for the alert
   const [isVisible, setIsVisible] = useState(false);
@@ -40,22 +41,19 @@ function Home() {
     }, 1000);
   };
 
-  const handleChange = (tags) => {
-    setTags(tags);
-  };
-
   const PostQuestions = async (e) => {
     e.preventDefault();
     if (
       question === "" ||
       category === "" ||
-      correctOption === "" || correctOption === "Select" ||
+      correctOption === "" ||
+      correctOption === "Select" ||
       point <= 0 ||
       tags.length === 0
     ) {
       alert("Please fill all the fields");
     } else {
-      setIsLoading(true)
+      setIsLoading(true);
       try {
         await axios.post(url, {
           question: question,
@@ -66,29 +64,10 @@ function Home() {
       } catch (error) {
         console.error("Error posting question:", error);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
         showAlert();
       }
     }
-  };
-
-  // const tagStyle = {
-  //   backgroundColor: "lightblue",
-  //   color: "black",
-  //   padding: "5px",
-  //   borderRadius: "3px",
-  //   margin: "2px",
-  //   cursor: "pointer",
-  // };
-
-  const containerStyle = {
-    borderRadius: "5px",
-    backgroundColor: "black",
-  };
-
-  const handleSaveTags = () => {
-    setTags([]);
-    console.log('working');
   };
 
   return (
@@ -100,15 +79,12 @@ function Home() {
               <Alert />
             </div>
           )}
-          {
-            Isloading && <div className="absolute top-0 left-0 w-full h-screen bg-slate-200 flex justify-center items-center"><Loader /></div>
-          }
-
-          {/* {invalidIsVisible && (
-            <div className="absolute top-1 right-0 w-[350px]">
-              <InvalidAlert />
+          {Isloading && (
+            <div className="absolute top-0 left-0 w-full h-screen bg-slate-200 flex justify-center items-center">
+              <Loader />
             </div>
-          )} */}
+          )}
+
           <div className="header text-4xl font-bold  text-gray-500 sm:truncate sm:text-3xl sm:tracking-tight">
             Welcome admin
           </div>
@@ -201,9 +177,7 @@ function Home() {
             </div>
 
             <div className="question">
-              <label
-                className="block text-sm font-medium text-gray-900"
-              >
+              <label className="block text-sm font-medium text-gray-900">
                 Question
               </label>
               <textarea
@@ -219,40 +193,22 @@ function Home() {
             </div>
 
             <div className="question">
-              <label
-                className="block text-sm font-medium text-gray-900"
-              >
+              <label className="block text-sm font-medium text-gray-900">
                 Entetr the options
               </label>
-              <div
-                className="tags-input-container"
-                // style={{
-                //   border: "2px solid gray",
-                //   padding: "7px",
-                //   borderRadius: "7px",
-                //   backgroundColor: "transparent",
-                // }}
-              >
-                {/* <TagsInput
-                  value={tags}
-                  onChange={handleChange}
-                  // tagProps={{ style: tagStyle }}
-                /> */}
-                <TagsInput value={tags} onChange={handleChange} />
-                {/* <button className="w-[80px] h-[40px] rounded-md bg-blue-400 text-white mt-4" onClick={}>Save</button> */}
+              <div className="tags-input-container">
+                <TagInput />
               </div>
             </div>
 
             <div className="question">
-              <label
-                className="block text-sm font-medium text-gray-900"
-              >
+              <label className="block text-sm font-medium text-gray-900">
                 Correct Option
               </label>
 
               <select
                 id="countries"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-transparent appearance-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 onChange={(e) => {
                   setCorrectOption(e.target.value);
                 }}
