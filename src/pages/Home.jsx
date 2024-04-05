@@ -15,6 +15,7 @@ function Home() {
   const [category, setCategory] = useState("");
   const [question, setQuestion] = useState("");
   const [correctOption, setCorrectOption] = useState("");
+  const [explaination, setExplaination] = useState("");
   const [point, setPoint] = useState(0);
   const [Isloading, setIsLoading] = useState(false);
 
@@ -49,7 +50,8 @@ function Home() {
       correctOption === "" ||
       correctOption === "Select" ||
       point <= 0 ||
-      tags.length === 0
+      tags.length === 0 ||
+      explaination === ""
     ) {
       alert("Please fill all the fields");
     } else {
@@ -59,6 +61,7 @@ function Home() {
           question: question,
           options: tags,
           correctOption: correctOption,
+          explaination: explaination,
           point: point,
         });
       } catch (error) {
@@ -72,8 +75,8 @@ function Home() {
 
   return (
     <>
-      <div className="form-wrapper w-full h-screen flex flex-row justify-center items-center p-0">
-        <div className="home-left-section relative w-full md:w-[80%] lg:w-[40%] h-screen p-7 overflow-y-scroll">
+      <div className="form-wrapper w-full h-screen flex flex-row justify-center items-center">
+        <div className="home-left-section w-full md:w-[80%] lg:w-[40%] h-screen p-10 overflow-y-scroll">
           {isVisible && (
             <div className="w-[350px] absolute top-7 right-7">
               <Alert />
@@ -85,7 +88,7 @@ function Home() {
             </div>
           )}
 
-          <div className="header text-4xl font-bold  text-gray-500 sm:truncate sm:text-3xl sm:tracking-tight">
+          <div className="header text-4xl font-bold  text-gray-600 sm:truncate sm:text-3xl sm:tracking-tight">
             Welcome admin
           </div>
           <div className="title mb-4   text-gray-600 sm:truncate sm:text-lg sm:tracking-tight">
@@ -181,8 +184,6 @@ function Home() {
                 Question
               </label>
               <textarea
-                id="about"
-                name="about"
                 rows="3"
                 className="border border-gray-400 pl-2 block w-full rounded-md py-1.5 text-gray-900 shadow-sm sm:text-sm sm"
                 onChange={(e) => {
@@ -226,6 +227,20 @@ function Home() {
                   );
                 })}
               </select>
+            </div>
+
+            <div className="question">
+              <label className="block text-sm font-medium text-gray-900">
+                Explaination
+              </label>
+              <textarea
+                rows="3"
+                className="border border-gray-400 pl-2 block w-full rounded-md py-1.5 text-gray-900 shadow-sm sm:text-sm sm"
+                onChange={(e) => {
+                  setExplaination(e.target.value);
+                }}
+                placeholder="Write the question..."
+              ></textarea>
             </div>
 
             <div className="question">
