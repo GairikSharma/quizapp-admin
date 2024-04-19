@@ -10,10 +10,14 @@ function App() {
   const [tags, setTags] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
+  const [code, setCode] = useState(false);
+
+  
+
   return (
     <>
       <GlobalContext.Provider
-        value={{ admin, setAdmin, tags, setTags, inputValue, setInputValue }}
+        value={{ admin, setAdmin, tags, setTags, inputValue, setInputValue, code, setCode }}
       >
         <BrowserRouter>
           <div className="App">

@@ -9,11 +9,13 @@ import GlobalContext from "../GlobalContext";
 import Loader from "../components/Loader";
 import TagInput from "../components/TagInput";
 import Ti from "../components/TagInput";
+import IsCode from "../components/IsCode";
 
 function Home() {
-  const { tags, setTags } = useContext(GlobalContext);
+  const { tags, code, setCode } = useContext(GlobalContext);
   const [category, setCategory] = useState("");
   const [question, setQuestion] = useState("");
+  const [codeSnippet, setCodeSnippet] = useState("");
   const [correctOption, setCorrectOption] = useState("");
   const [explaination, setExplaination] = useState("");
   const [point, setPoint] = useState(0);
@@ -23,6 +25,8 @@ function Home() {
   const [isVisible, setIsVisible] = useState(false);
   //states for the invalid alert
   const [invalidIsVisible, setInvalidIsVisible] = useState(false);
+
+  const [isCode, setIsCode] = useState(false);
 
   //States to check the input values
 
@@ -59,6 +63,7 @@ function Home() {
       try {
         await axios.post(url, {
           question: question,
+          code: codeSnippet,
           options: tags,
           correctOption: correctOption,
           explaination: explaination,
@@ -107,6 +112,8 @@ function Home() {
                   id=""
                   onChange={(e) => {
                     setCategory("quantitative-aptitude");
+                    setIsCode(false);
+                    setCode(false);
                   }}
                   className="w-[25%]"
                 />
@@ -120,6 +127,8 @@ function Home() {
                   id=""
                   onChange={(e) => {
                     setCategory("verbal");
+                    setIsCode(false);
+                    setCode(false);
                   }}
                   className="w-[25%]"
                 />
@@ -133,6 +142,8 @@ function Home() {
                   id=""
                   onChange={(e) => {
                     setCategory("dsa");
+                    setIsCode(true);
+                    setCode(false);
                   }}
                   className="w-[25%]"
                 />
@@ -146,6 +157,8 @@ function Home() {
                   id=""
                   onChange={(e) => {
                     setCategory("oop");
+                    setIsCode(true);
+                    setCode(false);
                   }}
                   className="w-[25%]"
                 />
@@ -159,6 +172,7 @@ function Home() {
                   id=""
                   onChange={(e) => {
                     setCategory("computer-networks");
+                    setCode(false);
                   }}
                   className="w-[25%]"
                 />
@@ -172,6 +186,8 @@ function Home() {
                   id=""
                   onChange={(e) => {
                     setCategory("dbms");
+                    setIsCode(false);
+                    setCode(false);
                   }}
                   className="w-[25%]"
                 />
@@ -188,10 +204,62 @@ function Home() {
                 className="border border-gray-400 pl-2 block w-full rounded-md py-1.5 text-gray-900 shadow-sm sm:text-sm sm"
                 onChange={(e) => {
                   setQuestion(e.target.value);
+                  setIsCode(false);
+                  setCode(false);
                 }}
                 placeholder="Write the question..."
               ></textarea>
             </div>
+
+            {isCode ? (
+              <div>
+                <div className="code-component flex flex-col gap-2">
+                  <span className="text-orange-300 text-md">
+                    Do you want to add code snippet ?
+                  </span>
+                  <div className="flex gap-2 items-center">
+                    <label htmlFor="isCode">Yes</label>
+                    <input
+                      type="radio"
+                      onChange={() => {
+                        setCode(true);
+                      }}
+                      name="isCode"
+                      id="isCode"
+                    />
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <label htmlFor="isCode">No</label>
+                    <input
+                      type="radio"
+                      onChange={() => {
+                        setCode(false);
+                      }}
+                      name="isCode"
+                      id="isCode"
+                    />
+                  </div>
+                </div>
+
+                {code ? (
+                  <div className="flex flex-col gap-2">
+                    <span className="text-green-500">Enter the code</span>
+                    <textarea
+                      rows="3"
+                      className="border border-gray-400 pl-2 block w-full rounded-md py-1.5 text-gray-900 shadow-sm sm:text-sm sm"
+                      onChange={(e) => {
+                        setCodeSnippet(e.target.value);
+                      }}
+                      placeholder="Enter the code "
+                    ></textarea>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            ) : (
+              ""
+            )}
 
             <div className="question">
               <label className="block text-sm font-medium text-gray-900">
