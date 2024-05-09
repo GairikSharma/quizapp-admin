@@ -32,7 +32,7 @@ input[type="radio"] {
   width: 15px;
   height: 15px;
   border: 1px solid rgb(0, 136, 233);
-  border-radius: 10%;
+  border-radius: 30%;
   outline: none;
 }
 
@@ -42,8 +42,10 @@ input[type="radio"]:before {
   width: 60%;
   height: 60%;
   margin: 20% auto;
+  border-radius: 30%;
 }
 
 input[type="radio"]:checked:before {
   background: rgb(0, 136, 233);
 }
+

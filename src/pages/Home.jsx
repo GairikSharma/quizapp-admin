@@ -4,12 +4,9 @@ import "react-tagsinput/react-tagsinput.css";
 // Importing axios
 import axios from "axios";
 import Alert from "../components/Alert";
-import InvalidAlert from "../components/InvalidAlert";
 import GlobalContext from "../GlobalContext";
 import Loader from "../components/Loader";
 import TagInput from "../components/TagInput";
-import Ti from "../components/TagInput";
-import IsCode from "../components/IsCode";
 
 function Home() {
   const { tags, code, setCode } = useContext(GlobalContext);
@@ -19,6 +16,7 @@ function Home() {
   const [correctOption, setCorrectOption] = useState("");
   const [explaination, setExplaination] = useState("");
   const [point, setPoint] = useState(0);
+  const [level, setLevel] = useState("");
   const [Isloading, setIsLoading] = useState(false);
 
   //States for the alert
@@ -55,7 +53,8 @@ function Home() {
       correctOption === "Select" ||
       point <= 0 ||
       tags.length === 0 ||
-      explaination === ""
+      explaination === "" ||
+      level === ""
     ) {
       alert("Please fill all the fields");
     } else {
@@ -68,6 +67,7 @@ function Home() {
           correctOption: correctOption,
           explaination: explaination,
           point: point,
+          level: level,
         });
       } catch (error) {
         console.error("Error posting question:", error);
@@ -76,6 +76,12 @@ function Home() {
         showAlert();
       }
     }
+  };
+
+  const handleLevelChange = (event) => {
+    const selectedLevel = event.target.value;
+    setLevel(selectedLevel); // Update the level state
+    console.log(selectedLevel); // Log the selected level
   };
 
   return (
@@ -88,7 +94,7 @@ function Home() {
             </div>
           )}
           {Isloading && (
-            <div className="absolute top-0 left-0 w-full h-screen bg-slate-200 flex justify-center items-center">
+            <div className="fixed top-0 left-0 bottom-0 right-0 w-full h-screen bg-slate-200 flex justify-center items-center z-50">
               <Loader />
             </div>
           )}
@@ -204,7 +210,7 @@ function Home() {
                 className="border border-gray-400 pl-2 block w-full rounded-md py-1.5 text-gray-900 shadow-sm sm:text-sm sm"
                 onChange={(e) => {
                   setQuestion(e.target.value);
-                  setIsCode(false);
+                  setIsCode(true);
                   setCode(false);
                 }}
                 placeholder="Write the question..."
@@ -328,6 +334,25 @@ function Home() {
                   setPoint(e.target.value);
                 }}
               ></input>
+            </div>
+
+            <div className="relative">
+              <label
+                for="number-input"
+                className="block text-sm font-medium text-gray-900"
+              >
+                Level:
+              </label>
+
+              <select
+                className="block w-[150px] pl-3 px-2 py-2 border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-opacity-50 rounded-md appearance-none"
+                onChange={handleLevelChange}
+              >
+                <option value="Basic">Basic</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"></div>
             </div>
 
             <button
