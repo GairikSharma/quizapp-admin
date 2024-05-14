@@ -53,8 +53,7 @@ function Home() {
       correctOption === "Select" ||
       point <= 0 ||
       tags.length === 0 ||
-      explaination === "" ||
-      level === ""
+      explaination === "" || level === "Select"
     ) {
       alert("Please fill all the fields");
     } else {
@@ -83,6 +82,8 @@ function Home() {
     setLevel(selectedLevel); // Update the level state
     console.log(selectedLevel); // Log the selected level
   };
+
+  const [alert, setAlert] = useState(false)
 
   return (
     <>
@@ -210,7 +211,6 @@ function Home() {
                 className="border border-gray-400 pl-2 block w-full rounded-md py-1.5 text-gray-900 shadow-sm sm:text-sm sm"
                 onChange={(e) => {
                   setQuestion(e.target.value);
-                  setIsCode(true);
                   setCode(false);
                 }}
                 placeholder="Write the question..."
@@ -331,9 +331,15 @@ function Home() {
                 placeholder="Enter point for this question..."
                 required
                 onChange={(e) => {
+                  if (e.target.value <= 0) {
+                    setAlert(true)
+                  } else {
+                    setAlert(false)
+                  }
                   setPoint(e.target.value);
                 }}
               ></input>
+              {alert ? <span className="text-sm text-red-500">* Point must greater than 0</span> : ""}
             </div>
 
             <div className="relative">
@@ -348,6 +354,7 @@ function Home() {
                 className="block w-[150px] pl-3 px-2 py-2 border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-opacity-50 rounded-md appearance-none"
                 onChange={handleLevelChange}
               >
+                <option value="Select">Select</option>
                 <option value="Basic">Basic</option>
                 <option value="Intermediate">Intermediate</option>
                 <option value="Advanced">Advanced</option>
