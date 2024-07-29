@@ -9,13 +9,9 @@ body {
 .App {
   width: 100%;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
 }
 ::-webkit-scrollbar {
-  width: 7px;
+  width: 3px;
 }
 
 ::-webkit-scrollbar-track {
@@ -48,4 +44,3 @@ input[type="radio"]:before {
 input[type="radio"]:checked:before {
   background: rgb(0, 136, 233);
 }
-
