@@ -11,6 +11,8 @@ function App() {
   const [inputValue, setInputValue] = useState("");
   const [code, setCode] = useState(false);
 
+  const [topic, setTopic] = useState("");
+
   return (
     <BrowserRouter>
       <GlobalContext.Provider
@@ -23,6 +25,8 @@ function App() {
           setInputValue,
           code,
           setCode,
+          topic,
+          setTopic,
         }}
       >
         <div className="App">
